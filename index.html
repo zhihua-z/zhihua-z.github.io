@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zhou Zhihua</title>
+<meta name="description" content="Personal homepage — who I am, my YouTube channel, and my teleprompter.">
+<meta name="theme-color" content="#0b0b0c">
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --fg: #1d1d1f;
+    --fg2: rgba(29,29,31,.66);
+    --fg3: rgba(29,29,31,.4);
+    --hair: rgba(0,0,0,.08);
+    --card: #ffffff;
+    --accent: #0071e3;
+    --shadow: 0 10px 30px rgba(0,0,0,.06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0b0c;
+      --fg: #f5f5f7;
+      --fg2: rgba(245,245,247,.66);
+      --fg3: rgba(245,245,247,.38);
+      --hair: rgba(255,255,255,.1);
+      --card: #161618;
+      --accent: #2997ff;
+      --shadow: 0 10px 30px rgba(0,0,0,.4);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0b0c;
+    --fg: #f5f5f7;
+    --fg2: rgba(245,245,247,.66);
+    --fg3: rgba(245,245,247,.38);
+    --hair: rgba(255,255,255,.1);
+    --card: #161618;
+    --accent: #2997ff;
+    --shadow: 0 10px 30px rgba(0,0,0,.4);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+  }
+  main {
+    width: 100%;
+    max-width: 640px;
+    padding: 72px 0 56px;
+  }
+
+  header h1 {
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+  }
+  .tagline {
+    font-size: 1.15rem;
+    color: var(--fg2);
+    margin: 0 0 20px;
+  }
+  .about {
+    color: var(--fg2);
+    margin: 0 0 40px;
+  }
+
+  h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg3);
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+
+  .links {
+    display: grid;
+    gap: 14px;
+    margin: 0 0 48px;
+  }
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--card);
+    border: 1px solid var(--hair);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    color: var(--fg);
+    text-decoration: none;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .link:hover, .link:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    outline: none;
+  }
+  .link .icon {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--hair);
+    font-size: 1.3rem;
+  }
+  .link .text { flex: 1; min-width: 0; }
+  .link .title { font-weight: 600; font-size: 1.05rem; }
+  .link .desc { color: var(--fg2); font-size: 0.92rem; }
+  .link .arrow { color: var(--fg3); font-size: 1.2rem; }
+
+  footer {
+    color: var(--fg3);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--hair);
+    padding-top: 20px;
+  }
+
+  @media (max-width: 480px) {
+    main { padding-top: 48px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Zhou Zhihua</h1>
+    <p class="tagline">wandering in my lalaland</p>
+  </header>
+
+  <p class="about">
+    still wandering...
+  </p>
+
+  <h2>Links</h2>
+  <nav class="links">
+    <a class="link" href="https://www.youtube.com/@liuhuoji" target="_blank" rel="noopener">
+      <span class="icon">▶</span>
+      <span class="text">
+        <span class="title">YouTube</span>
+        <span class="desc">Videos and tutorials</span>
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+
+    <a class="link" href="https://www.youtube.com/watch?v=A2uc2e2CpyU&list=PLDdR6brMMNk0" target="_blank" rel="noopener">
+      <span class="icon">📘</span>
+      <span class="text">
+        <span class="title">English IGCSE Playlist</span>
+        <span class="desc">IGCSE lessons in English</span>
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+
+    <a class="link" href="https://www.youtube.com/watch?v=hKjUFVpmjtc&list=PLJTN2aCPExyI" target="_blank" rel="noopener">
+      <span class="icon">📗</span>
+      <span class="text">
+        <span class="title">Chinese IGCSE Playlist</span>
+        <span class="desc">IGCSE lessons in Chinese</span>
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+
+    <a class="link" href="https://heizi.app/prompter" target="_blank" rel="noopener">
+      <span class="icon">📜</span>
+      <span class="text">
+        <span class="title">TelePrompter</span>
+        <span class="desc">A browser-based teleprompter for recording</span>
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+  </nav>
+
+  <footer>© <span id="year"></span> Zhou Zhihua</footer>
+</main>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
