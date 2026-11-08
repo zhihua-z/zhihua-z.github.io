@@ -2,195 +2,670 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zhou Zhihua</title>
-<meta name="description" content="Personal homepage — who I am, my YouTube channel, and my teleprompter.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0b0b0c">
+<title>Zhou Zhihua</title>
+<meta name="description" content="Zhou Zhihua — wandering in my lalaland. YouTube, IGCSE playlists and the TelePrompter.">
 <style>
+:root {
+  --bg: #0b0b0c;
+  --fg: #f5f5f7;
+  --fg2: rgba(245,245,247,.62);
+  --fg3: rgba(245,245,247,.36);
+  --hair: rgba(255,255,255,.08);
+  --fill: rgba(255,255,255,.07);
+  --fill2: rgba(255,255,255,.12);
+  --glass: rgba(30,30,32,.62);
+  --accent: #0a84ff;
+  --star: #ffffff;
+  --shadow: 0 12px 40px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.04) inset;
+  --ease: cubic-bezier(.25,.1,.25,1);
+  --glide: cubic-bezier(.22,.8,.26,1);
+  /* mist colours, read by the shader */
+  --mist-a: #121316;
+  --mist-b: #2a2c33;
+  --mist-c: #4a4d57;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
   :root {
     --bg: #f5f5f7;
     --fg: #1d1d1f;
-    --fg2: rgba(29,29,31,.66);
-    --fg3: rgba(29,29,31,.4);
+    --fg2: rgba(29,29,31,.62);
+    --fg3: rgba(29,29,31,.36);
     --hair: rgba(0,0,0,.08);
-    --card: #ffffff;
-    --accent: #0071e3;
-    --shadow: 0 10px 30px rgba(0,0,0,.06);
+    --fill: rgba(0,0,0,.05);
+    --fill2: rgba(0,0,0,.09);
+    --glass: rgba(255,255,255,.72);
+    --accent: #007aff;
+    --star: #007aff;
+    --shadow: 0 12px 40px rgba(0,0,0,.12);
+    --mist-a: #e4e5ea;
+    --mist-b: #f3f3f6;
+    --mist-c: #ffffff;
     color-scheme: light;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0b0b0c;
-      --fg: #f5f5f7;
-      --fg2: rgba(245,245,247,.66);
-      --fg3: rgba(245,245,247,.38);
-      --hair: rgba(255,255,255,.1);
-      --card: #161618;
-      --accent: #2997ff;
-      --shadow: 0 10px 30px rgba(0,0,0,.4);
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0b0b0c;
-    --fg: #f5f5f7;
-    --fg2: rgba(245,245,247,.66);
-    --fg3: rgba(245,245,247,.38);
-    --hair: rgba(255,255,255,.1);
-    --card: #161618;
-    --accent: #2997ff;
-    --shadow: 0 10px 30px rgba(0,0,0,.4);
-    color-scheme: dark;
-  }
+}
 
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.55;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 0 16px;
-  }
-  main {
-    width: 100%;
-    max-width: 640px;
-    padding: 72px 0 56px;
-  }
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  position: fixed; inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  user-select: none; -webkit-user-select: none;
+}
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid var(--hair);
+  box-shadow: var(--shadow);
+}
 
-  header h1 {
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0 0 8px;
-  }
-  .tagline {
-    font-size: 1.15rem;
-    color: var(--fg2);
-    margin: 0 0 20px;
-  }
-  .about {
-    color: var(--fg2);
-    margin: 0 0 40px;
-  }
+/* ---------- Sky: everything beneath the mist ---------- */
+#sky { position: absolute; inset: 0; }
 
-  h2 {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--fg3);
-    font-weight: 600;
-    margin: 0 0 14px;
-  }
+#dust { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-  .links {
-    display: grid;
-    gap: 14px;
-    margin: 0 0 48px;
-  }
-  .link {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 18px 20px;
-    background: var(--card);
-    border: 1px solid var(--hair);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    color: var(--fg);
-    text-decoration: none;
-    transition: transform .15s ease, border-color .15s ease;
-  }
-  .link:hover, .link:focus-visible {
-    transform: translateY(-2px);
-    border-color: var(--accent);
-    outline: none;
-  }
-  .link .icon {
-    flex: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: grid;
-    place-items: center;
-    background: var(--hair);
-    font-size: 1.3rem;
-  }
-  .link .text { flex: 1; min-width: 0; }
-  .link .title { font-weight: 600; font-size: 1.05rem; }
-  .link .desc { color: var(--fg2); font-size: 0.92rem; }
-  .link .arrow { color: var(--fg3); font-size: 1.2rem; }
+#lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#lines path {
+  fill: none; stroke: var(--fg3); stroke-width: 1; stroke-dasharray: 2 6;
+  opacity: .55;
+}
 
-  footer {
-    color: var(--fg3);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--hair);
-    padding-top: 20px;
-  }
+#hero {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw - 32px));
+  text-align: center;
+  pointer-events: none;
+}
+#hero .kicker {
+  display: inline-block;
+  padding: 5px 12px; border-radius: 999px;
+  background: var(--fill); color: var(--fg2);
+  font-size: 13px; letter-spacing: .02em; font-variant-numeric: tabular-nums;
+  margin-bottom: 18px;
+}
+#hero h1 {
+  margin: 0;
+  font-size: clamp(40px, 8.4vw, 92px);
+  line-height: 1.05; font-weight: 700; letter-spacing: -.025em;
+  text-wrap: balance;
+}
+#hero .tag {
+  margin: 14px 0 0;
+  font-size: clamp(17px, 2.4vw, 22px); font-weight: 600; letter-spacing: -.01em;
+  color: var(--fg2);
+}
+#hero .bio { margin: 8px 0 0; font-size: 15px; color: var(--fg3); }
 
-  @media (max-width: 480px) {
-    main { padding-top: 48px; }
-  }
+/* ---------- Stars ---------- */
+.star {
+  --x: 50%; --y: 50%;
+  position: absolute; left: var(--x); top: var(--y);
+  width: 0; height: 0;
+  color: var(--fg); text-decoration: none;
+  outline: none;
+}
+.star .hit {
+  position: absolute; left: -30px; top: -30px; width: 60px; height: 60px; border-radius: 50%;
+}
+.star .core {
+  position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--star);
+  box-shadow:
+    0 0 6px 1px var(--star),
+    0 0 22px 6px color-mix(in srgb, var(--accent) 70%, transparent),
+    0 0 60px 18px color-mix(in srgb, var(--accent) 28%, transparent);
+  transition: transform 480ms var(--glide), box-shadow 480ms var(--glide);
+  animation: twinkle 3.8s var(--ease) infinite;
+  animation-delay: var(--d, 0s);
+}
+.star .spark {
+  position: absolute; left: -26px; top: -26px; width: 52px; height: 52px;
+  pointer-events: none;
+  transition: transform 600ms var(--glide), opacity 400ms var(--ease);
+  opacity: .8;
+  animation: spin 24s linear infinite;
+}
+.star .spark::before, .star .spark::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  background: linear-gradient(to right, transparent, var(--star), transparent);
+  transform: translate(-50%, -50%);
+}
+.star .spark::before { width: 52px; height: 1px; }
+.star .spark::after  { width: 1px; height: 52px; background: linear-gradient(to bottom, transparent, var(--star), transparent); }
+.star .ring {
+  position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  opacity: 0; transform: scale(.4);
+  pointer-events: none;
+}
+.star.go .ring { animation: ring 700ms var(--glide); }
+
+.star .label {
+  position: absolute; top: 50%;
+  left: 28px;
+  transform: translateY(-50%) scale(.9);
+  transform-origin: left center;
+  width: max-content; max-width: min(260px, 42vw);
+  opacity: .7;
+  transition: opacity 320ms var(--ease), transform 480ms var(--glide);
+}
+.star.left .label { left: auto; right: 28px; text-align: right; transform-origin: right center; }
+.star .num {
+  display: block;
+  font-size: 12px; color: var(--fg3); letter-spacing: .08em;
+  font-variant-numeric: tabular-nums; margin-bottom: 2px;
+}
+.star .title { display: block; font-size: 19px; font-weight: 600; letter-spacing: -.01em; line-height: 1.25; }
+.star .desc  { display: block; font-size: 14px; color: var(--fg2); margin-top: 3px; line-height: 1.4; }
+.star .go-hint {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 8px; padding: 3px 9px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; color: #fff; background: var(--accent);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+}
+
+.star:hover .core, .star:focus-visible .core, .star.armed .core {
+  transform: scale(1.5);
+  box-shadow:
+    0 0 8px 2px var(--star),
+    0 0 30px 10px color-mix(in srgb, var(--accent) 85%, transparent),
+    0 0 90px 30px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.star:hover .spark, .star:focus-visible .spark, .star.armed .spark { transform: scale(1.7); opacity: 1; }
+.star:hover .label, .star:focus-visible .label, .star.armed .label { opacity: 1; transform: translateY(-50%) scale(1); }
+.star:hover .go-hint, .star:focus-visible .go-hint, .star.armed .go-hint { opacity: 1; transform: none; }
+.star:active .core { transform: scale(1.2); }
+
+/* constellation layout — wide screens */
+#s1, #g1 { --x: 17%; --y: 24%; --d: 0s; }
+#s2, #g2 { --x: 83%; --y: 26%; --d: -1.2s; }
+#s3, #g3 { --x: 80%; --y: 77%; --d: -2.1s; }
+#s4, #g4 { --x: 21%; --y: 75%; --d: -.6s; }
+
+/* tall / narrow screens */
+@media (max-width: 720px), (max-aspect-ratio: 4/5) {
+  #s1, #g1 { --x: 14%; --y: 16%; }
+  #s2, #g2 { --x: 86%; --y: 29%; }
+  #s3, #g3 { --x: 86%; --y: 72%; }
+  #s4, #g4 { --x: 14%; --y: 85%; }
+  .star .title { font-size: 17px; }
+  .star .desc { font-size: 13px; }
+  .star .label { max-width: 58vw; }
+}
+
+/* ---------- Mist ---------- */
+#mist {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+#mistFallback {
+  position: absolute; inset: 0; pointer-events: none; display: none;
+  background:
+    radial-gradient(120% 90% at 30% 20%, var(--mist-b), transparent 70%),
+    radial-gradient(100% 80% at 80% 90%, var(--mist-c), transparent 70%),
+    var(--mist-a);
+  opacity: .96;
+  -webkit-mask-image: radial-gradient(circle 180px at var(--mx, -999px) var(--my, -999px), transparent 0, transparent 40%, #000 100%);
+  mask-image: radial-gradient(circle 180px at var(--mx, -999px) var(--my, -999px), transparent 0, transparent 40%, #000 100%);
+}
+body.no-gl #mistFallback { display: block; }
+body.no-gl #mist { display: none; }
+
+/* faint glints above the mist so the hidden stars can be found */
+#glints { position: absolute; inset: 0; pointer-events: none; }
+#glints i {
+  position: absolute; left: var(--x); top: var(--y);
+  width: 4px; height: 4px; margin: -2px 0 0 -2px; border-radius: 50%;
+  background: var(--star);
+  box-shadow: 0 0 10px 3px color-mix(in srgb, var(--accent) 55%, transparent);
+  opacity: .5;
+  animation: glint 4.6s var(--ease) infinite; animation-delay: var(--d, 0s);
+  transition: opacity 500ms var(--ease);
+}
+#glints i.seen { opacity: 0; animation: none; }
+@keyframes glint { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: .15; transform: scale(.6); } }
+
+/* ---------- Chrome above the mist ---------- */
+#topbar {
+  position: absolute; left: 0; right: 0; top: 0; z-index: 10;
+  padding: calc(env(safe-area-inset-top) + 14px) max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--fg2); font-variant-numeric: tabular-nums; letter-spacing: .01em;
+  pointer-events: none;
+}
+#clock { color: var(--fg); font-weight: 600; }
+#found em { font-style: normal; color: var(--fg); font-weight: 600; }
+
+#hint {
+  position: absolute; left: 16px; right: 16px; z-index: 10;
+  bottom: calc(env(safe-area-inset-bottom) + 24px);
+  width: -webkit-fit-content; width: fit-content; margin: 0 auto;
+  padding: 10px 16px; border-radius: 999px;
+  font-size: 14px; color: var(--fg2);
+  display: flex; align-items: center; gap: 8px;
+  pointer-events: none;
+  transition: opacity 600ms var(--ease), transform 600ms var(--glide);
+}
+#hint .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 1.8s var(--ease) infinite; }
+#hint .touch { display: none; }
+@media (pointer: coarse) { #hint .mouse { display: none; } #hint .touch { display: inline; } }
+body.touched #hint { opacity: 0; transform: translateY(12px); }
+
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .62; } }
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.7); } }
+@keyframes ring { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(2.6); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .star .core, .star .spark, #hint .dot { animation: none; }
+}
 </style>
 </head>
 <body>
-<main>
-  <header>
+
+<!-- Beneath the mist -->
+<div id="sky">
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <svg id="lines" aria-hidden="true"><path id="linePath" d=""/></svg>
+
+  <header id="hero">
+    <span class="kicker">heizi.app</span>
     <h1>Zhou Zhihua</h1>
-    <p class="tagline">wandering in my lalaland</p>
+    <p class="tag">wandering in my lalaland</p>
+    <p class="bio">still wandering...</p>
   </header>
 
-  <p class="about">
-    still wandering...
-  </p>
-
-  <h2>Links</h2>
-  <nav class="links">
-    <a class="link" href="https://www.youtube.com/@liuhuoji" target="_blank" rel="noopener">
-      <span class="icon">▶</span>
-      <span class="text">
+  <nav aria-label="Links">
+    <a class="star" id="s1" href="https://www.youtube.com/@liuhuoji" target="_blank" rel="noopener">
+      <span class="hit"></span><span class="spark"></span><span class="core"></span><span class="ring"></span>
+      <span class="label">
+        <span class="num">01</span>
         <span class="title">YouTube</span>
-        <span class="desc">Videos and tutorials</span>
+        <span class="desc">@liuhuoji · my channel</span>
+        <span class="go-hint">Open ↗</span>
       </span>
-      <span class="arrow">↗</span>
     </a>
-
-    <a class="link" href="https://www.youtube.com/watch?v=A2uc2e2CpyU&list=PLDdR6brMMNk0" target="_blank" rel="noopener">
-      <span class="icon">📘</span>
-      <span class="text">
-        <span class="title">English IGCSE Playlist</span>
-        <span class="desc">IGCSE lessons in English</span>
+    <a class="star left" id="s2" href="https://www.youtube.com/watch?v=A2uc2e2CpyU&amp;list=PLDdR6brMMNk0" target="_blank" rel="noopener">
+      <span class="hit"></span><span class="spark"></span><span class="core"></span><span class="ring"></span>
+      <span class="label">
+        <span class="num">02</span>
+        <span class="title">IGCSE · English</span>
+        <span class="desc">Lesson playlist, taught in English</span>
+        <span class="go-hint">Open ↗</span>
       </span>
-      <span class="arrow">↗</span>
     </a>
-
-    <a class="link" href="https://www.youtube.com/watch?v=hKjUFVpmjtc&list=PLJTN2aCPExyI" target="_blank" rel="noopener">
-      <span class="icon">📗</span>
-      <span class="text">
-        <span class="title">Chinese IGCSE Playlist</span>
-        <span class="desc">IGCSE lessons in Chinese</span>
+    <a class="star left" id="s3" href="https://www.youtube.com/watch?v=hKjUFVpmjtc&amp;list=PLJTN2aCPExyI" target="_blank" rel="noopener">
+      <span class="hit"></span><span class="spark"></span><span class="core"></span><span class="ring"></span>
+      <span class="label">
+        <span class="num">03</span>
+        <span class="title">IGCSE · 中文</span>
+        <span class="desc">Lesson playlist, taught in Chinese</span>
+        <span class="go-hint">Open ↗</span>
       </span>
-      <span class="arrow">↗</span>
     </a>
-
-    <a class="link" href="https://heizi.app/prompter" target="_blank" rel="noopener">
-      <span class="icon">📜</span>
-      <span class="text">
+    <a class="star" id="s4" href="https://heizi.app/prompter" target="_blank" rel="noopener">
+      <span class="hit"></span><span class="spark"></span><span class="core"></span><span class="ring"></span>
+      <span class="label">
+        <span class="num">04</span>
         <span class="title">TelePrompter</span>
-        <span class="desc">A browser-based teleprompter for recording</span>
+        <span class="desc">提词器 · read to the camera</span>
+        <span class="go-hint">Open ↗</span>
       </span>
-      <span class="arrow">↗</span>
     </a>
   </nav>
+</div>
 
-  <footer>© <span id="year"></span> Zhou Zhihua</footer>
-</main>
+<!-- The mist -->
+<canvas id="mist" aria-hidden="true"></canvas>
+<div id="mistFallback" aria-hidden="true"></div>
+<div id="glints" aria-hidden="true"><i id="g1"></i><i id="g2"></i><i id="g3"></i><i id="g4"></i></div>
+
+<!-- Above the mist -->
+<div id="topbar">
+  <span id="found">stars found <em id="foundN">0</em> / 4</span>
+  <span id="clock">--:--</span>
+</div>
+<div id="hint" class="glass">
+  <span class="dot"></span>
+  <span class="mouse">move to part the mist</span>
+  <span class="touch">touch &amp; drag to part the mist</span>
+</div>
+
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+(() => {
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  const body = document.body;
+
+  /* ---------- clock ---------- */
+  const clock = document.getElementById("clock");
+  const tickClock = () => {
+    const d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+  };
+  tickClock(); setInterval(tickClock, 10_000);
+
+  /* ---------- background dust (tiny faint stars beneath the mist) ---------- */
+  const dust = document.getElementById("dust");
+  const dctx = dust.getContext("2d");
+  function drawDust() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const w = innerWidth, h = innerHeight;
+    dust.width = w * dpr; dust.height = h * dpr;
+    dctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dctx.clearRect(0, 0, w, h);
+    const fg = getComputedStyle(document.documentElement).getPropertyValue("--fg").trim();
+    let seed = 7;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const n = Math.round((w * h) / 5200);
+    dctx.fillStyle = fg;
+    for (let i = 0; i < n; i++) {
+      const r = rnd() < 0.92 ? rnd() * 0.8 + 0.3 : rnd() * 1.2 + 0.9;
+      dctx.globalAlpha = rnd() * 0.5 + 0.12;
+      dctx.beginPath(); dctx.arc(rnd() * w, rnd() * h, r, 0, Math.PI * 2); dctx.fill();
+    }
+    dctx.globalAlpha = 1;
+  }
+
+  /* ---------- constellation lines ---------- */
+  const stars = [...document.querySelectorAll(".star")];
+  const linePath = document.getElementById("linePath");
+  const lines = document.getElementById("lines");
+  let starPos = [];
+  function layoutStars() {
+    starPos = stars.map(s => {
+      const r = s.getBoundingClientRect();
+      const l = s.querySelector(".label").getBoundingClientRect();
+      return { x: r.left, y: r.top, lx: l.left + l.width / 2, ly: l.top + l.height / 2 };
+    });
+    lines.setAttribute("viewBox", `0 0 ${innerWidth} ${innerHeight}`);
+    const p = starPos;
+    // gentle curved loop through the four stars
+    let d = `M${p[0].x},${p[0].y}`;
+    for (let i = 1; i <= p.length; i++) {
+      const a = p[i - 1], b = p[i % p.length];
+      const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+      const cx = mx + (innerWidth / 2 - mx) * 0.18, cy = my + (innerHeight / 2 - my) * 0.18;
+      d += ` Q${cx},${cy} ${b.x},${b.y}`;
+    }
+    linePath.setAttribute("d", d);
+  }
+
+  /* ---------- found counter ---------- */
+  const found = new Set();
+  const foundN = document.getElementById("foundN");
+  function markFound(i) {
+    if (found.has(i)) return;
+    found.add(i); foundN.textContent = found.size;
+    document.getElementById("g" + (i + 1)).classList.add("seen");
+  }
+
+  /* ---------- pointer + reveal trail ---------- */
+  const MAX = 48;          // shader slots
+  const LIFE = 2200;       // ms a trail point takes to fade back into mist
+  const trail = [];        // {x, y, t, s}
+  const cursor = { x: -9999, y: -9999, active: false, s: 0, last: -1e9, lastPush: 0 };
+  let focusPt = null;      // keyboard-focused star
+  let hoverIdx = null;     // star under the mouse
+  let wander = 0;          // idle wisp strength 0..1
+  let touchedOnce = false;
+
+  function push(x, y, s, now) {
+    const l = trail[trail.length - 1];
+    if (l && Math.hypot(l.x - x, l.y - y) < 14 && now - l.t < 60) return;
+    trail.push({ x, y, t: now, s });
+    if (trail.length > MAX - 4) trail.shift();
+  }
+
+  function onMove(e) {
+    const now = performance.now();
+    cursor.x = e.clientX; cursor.y = e.clientY;
+    cursor.active = true; cursor.last = now;
+    push(cursor.x, cursor.y, 1, now);
+    if (!touchedOnce) { touchedOnce = true; body.classList.add("touched"); }
+  }
+  addEventListener("pointermove", onMove, { passive: true });
+  addEventListener("pointerdown", onMove, { passive: true });
+  addEventListener("pointerup", e => { if (e.pointerType !== "mouse") cursor.active = false; });
+  addEventListener("pointercancel", () => { cursor.active = false; });
+  document.addEventListener("pointerleave", () => { cursor.active = false; });
+  document.documentElement.addEventListener("mouseleave", () => { cursor.active = false; });
+  addEventListener("blur", () => { cursor.active = false; });
+
+  /* ---------- stars: hover / focus / touch arming ---------- */
+  stars.forEach((s, i) => {
+    s.addEventListener("pointerenter", e => { markFound(i); if (e.pointerType === "mouse") hoverIdx = i; });
+    s.addEventListener("pointerleave", () => { if (hoverIdx === i) hoverIdx = null; });
+    s.addEventListener("focus", () => { focusPt = i; markFound(i); });
+    s.addEventListener("blur", () => { if (focusPt === i) focusPt = null; });
+    s.addEventListener("click", e => {
+      // On touch, the first tap reveals the star; the second opens it.
+      if (coarse && !s.classList.contains("armed")) {
+        e.preventDefault();
+        stars.forEach(o => o.classList.remove("armed"));
+        s.classList.add("armed");
+        markFound(i);
+        return;
+      }
+      s.classList.remove("go"); void s.offsetWidth; s.classList.add("go");
+    });
+  });
+  addEventListener("pointerdown", e => {
+    if (!e.target.closest(".star")) stars.forEach(o => o.classList.remove("armed"));
+  });
+
+  /* ---------- WebGL mist ---------- */
+  const canvas = document.getElementById("mist");
+  const SCALE = 0.5; // mist is soft; render it at half resolution
+  const gl = canvas.getContext("webgl", { premultipliedAlpha: true, alpha: true, antialias: false });
+
+  const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
+  const FRAG = `
+precision highp float;
+uniform vec2 uRes;
+uniform float uTime;
+uniform float uRadius;
+uniform vec3 uPts[${MAX}];
+uniform vec3 uA, uB, uC;
+
+float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  vec2 u = f * f * (3. - 2. * f);
+  return mix(mix(hash(i), hash(i + vec2(1., 0.)), u.x),
+             mix(hash(i + vec2(0., 1.)), hash(i + vec2(1., 1.)), u.x), u.y);
+}
+const mat2 M = mat2(1.6, 1.2, -1.2, 1.6);
+float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 5; i++){ v += a * noise(p); p = M * p; a *= .5; } return v; }
+float fbm3(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 3; i++){ v += a * noise(p); p = M * p; a *= .5; } return v; }
+
+void main(){
+  vec2 frag = gl_FragCoord.xy;
+  vec2 uv = frag / uRes.y;
+  float t = uTime;
+
+  // domain-warped drifting fog
+  vec2 q = vec2(fbm(uv * 1.4 + vec2(t * .030, -t * .018)),
+                fbm(uv * 1.4 + vec2(-t * .022, t * .012) + 5.2));
+  vec2 r = vec2(fbm(uv * 1.8 + q * 2.2 + vec2(1.7, 9.2) + t * .015),
+                fbm(uv * 1.8 + q * 2.2 + vec2(8.3, 2.8) - t * .012));
+  float f = fbm(uv * 1.6 + r * 1.8);
+
+  vec3 col = mix(uA, uB, smoothstep(.15, .75, f));
+  col = mix(col, uC, smoothstep(.55, .95, f) * .55);
+
+  // vignette: thicker at the edges
+  vec2 c = frag / uRes - .5;
+  float vig = smoothstep(.2, .75, length(c * vec2(uRes.x / uRes.y, 1.)));
+
+  // fully opaque; only the cursor opens it (glints above the mist hint at the stars)
+  float alpha = 1.;
+  col *= 1. - vig * .25;
+
+  // reveal: the cursor and its trail part the mist
+  vec2 px = vec2(frag.x, uRes.y - frag.y);
+  float edge = fbm3(uv * 5. + vec2(t * .08, -t * .05)) - .5;
+  float open = 0.;
+  for (int i = 0; i < ${MAX}; i++){
+    vec3 p = uPts[i];
+    if (p.z <= 0.) continue;
+    float d = length(px - p.xy) / uRadius;
+    d += edge * .7 + (f - .5) * .35;
+    open = max(open, smoothstep(1., .3, d) * p.z);
+  }
+
+  // mist pushed aside piles up slightly brighter at the rim
+  float rim = smoothstep(.0, .45, open) * (1. - smoothstep(.45, 1., open));
+  col = mix(col, uC, rim * .35);
+
+  alpha *= 1. - open;
+  gl_FragColor = vec4(col * alpha, alpha);
+}`;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+    return s;
+  }
+
+  let prog, U = {};
+  try {
+    if (!gl) throw new Error("no webgl");
+    prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    for (const n of ["uRes", "uTime", "uRadius", "uPts", "uA", "uB", "uC"]) U[n] = gl.getUniformLocation(prog, n);
+  } catch (err) {
+    console.warn("Mist falling back to CSS:", err);
+    prog = null;
+    body.classList.add("no-gl");
+  }
+
+  function hexToRgb(h) {
+    h = h.trim().replace("#", "");
+    if (h.length === 3) h = h.split("").map(c => c + c).join("");
+    const n = parseInt(h, 16);
+    return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
+  }
+  function setColors() {
+    if (!prog) return;
+    const cs = getComputedStyle(document.documentElement);
+    gl.uniform3fv(U.uA, hexToRgb(cs.getPropertyValue("--mist-a")));
+    gl.uniform3fv(U.uB, hexToRgb(cs.getPropertyValue("--mist-b")));
+    gl.uniform3fv(U.uC, hexToRgb(cs.getPropertyValue("--mist-c")));
+  }
+
+  function resize() {
+    drawDust();
+    layoutStars();
+    if (!prog) return;
+    canvas.width = Math.max(1, Math.round(innerWidth * SCALE));
+    canvas.height = Math.max(1, Math.round(innerHeight * SCALE));
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  }
+  addEventListener("resize", resize);
+  matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => { setColors(); drawDust(); });
+
+  /* ---------- frame loop ---------- */
+  const pts = new Float32Array(MAX * 3);
+  const fallback = document.getElementById("mistFallback");
+  const t0 = performance.now();
+
+  function frame(now) {
+    // cursor strength eases in/out
+    cursor.s += ((cursor.active ? 1 : 0) - cursor.s) * (cursor.active ? 0.25 : 0.035);
+
+    // idle wisp: wanders and parts the mist when nobody is touching it
+    const idle = now - cursor.last > 3500;
+    wander += ((idle ? 1 : 0) - wander) * 0.012;
+    let wx = 0, wy = 0;
+    if (wander > 0.01) {
+      const k = (now - t0) * (reduceMotion ? 0.00004 : 0.00011);
+      wx = innerWidth * (0.5 + 0.38 * Math.sin(k * 1.7 + 0.4) * Math.cos(k * 0.5));
+      wy = innerHeight * (0.5 + 0.34 * Math.sin(k * 2.3 + 1.3));
+      if (wander > 0.2) push(wx, wy, wander * 0.85, now);
+    }
+
+    // drop expired trail points
+    while (trail.length && now - trail[0].t > LIFE) trail.shift();
+
+    pts.fill(0);
+    let n = 0;
+    const put = (x, y, s) => { if (n >= MAX || s <= 0.002) return; pts[n * 3] = x * SCALE; pts[n * 3 + 1] = y * SCALE; pts[n * 3 + 2] = Math.min(1, s); n++; };
+    put(cursor.x, cursor.y, cursor.s);
+    // an active star clears the mist over itself and its whole label
+    stars.forEach((s, i) => {
+      if (i === focusPt || i === hoverIdx || s.classList.contains("armed")) {
+        const p = starPos[i];
+        put(p.x, p.y, 1);
+        put(p.lx, p.ly, 1);
+        put((p.x + p.lx) / 2, (p.y + p.ly) / 2, 1);
+      }
+    });
+    put(wx, wy, wander * 0.85);
+    for (let i = trail.length - 1; i >= 0; i--) {
+      const p = trail[i];
+      const a = 1 - (now - p.t) / LIFE;
+      put(p.x, p.y, p.s * a * a * 0.95);
+    }
+
+    // stars count as found when the mist around them is open
+    for (let i = 0; i < starPos.length; i++) {
+      if (found.has(i)) continue;
+      const sp = starPos[i];
+      if (Math.hypot(sp.x - cursor.x, sp.y - cursor.y) < 90 && cursor.s > 0.5) markFound(i);
+      else if (wander > 0.5 && Math.hypot(sp.x - wx, sp.y - wy) < 60) markFound(i);
+    }
+
+    if (prog) {
+      const radius = (coarse ? 130 : 170) * Math.min(1.25, Math.max(0.8, Math.min(innerWidth, innerHeight) / 800));
+      gl.uniform1f(U.uTime, ((now - t0) / 1000) * (reduceMotion ? 0.25 : 1));
+      gl.uniform1f(U.uRadius, radius * SCALE);
+      gl.uniform3fv(U.uPts, pts);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    } else {
+      const x = cursor.s > 0.05 ? cursor.x : wander > 0.05 ? wx : -999;
+      const y = cursor.s > 0.05 ? cursor.y : wander > 0.05 ? wy : -999;
+      fallback.style.setProperty("--mx", x + "px");
+      fallback.style.setProperty("--my", y + "px");
+    }
+    requestAnimationFrame(frame);
+  }
+
+  setColors();
+  resize();
+  // start with the idle wisp already drifting so the page is alive on first paint
+  cursor.last = -1e9; wander = 0.6;
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
